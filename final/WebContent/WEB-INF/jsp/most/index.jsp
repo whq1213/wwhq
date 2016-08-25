@@ -10,9 +10,9 @@
       <!-- Bootstrap -->
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
         <meta charset="utf-8">
-        <link href="./css/public.css" type="text/css" rel="stylesheet">
-        <link href="./css/houtai.css" type="text/css" rel="stylesheet">
-        <link href="./css/smartMenu.css" type="text/css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/css/public.css" type="text/css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/css/houtai.css" type="text/css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/css/smartMenu.css" type="text/css" rel="stylesheet">
         
         <title>烽火网</title>
     </head>
@@ -35,7 +35,7 @@
                             <div class="li-item"><em class="scm li-ico ic3"></em>我的文件<span class="scm arrow"></span></div>
                             <dl>
                                 <dd>
-				     				<a href="分类上传.jsp" class="dd-item" target="iframe0">文件上传<span class="scm dd-ar"></span></a>
+				     				<a href="findUserInfo" class="dd-item" target="iframe0">文件上传<span class="scm dd-ar"></span></a>
 				     			</dd>
 				     			<dd>
 				     				<a href="上传记录.jsp" class="dd-item" target="iframe0">上传记录<span class="scm dd-ar"></span></a>
@@ -151,11 +151,11 @@
                 </div>
     		</div>
     	</div>
-        <script type="text/javascript" src="./js/jquery.min.js"></script>
-        <script type="text/javascript" src="./js/contabs.js"></script>
-        <script type="text/javascript" src="./js/maintabs.js"></script>
-        <script type="text/javascript" src="./js/jquery-smartMenu-min.js"></script>
-        <script type="text/javascript" src="./js/jquery.nicescroll.min.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/js/contabs.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/js/maintabs.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-smartMenu-min.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.nicescroll.min.js"></script>
         <script type="text/javascript">
             $(function(){
                 $(".ad-menu").niceScroll({cursorborder:"0 none",cursorcolor:"#1a1a19",cursoropacitymin:"0",boxzoom:false});

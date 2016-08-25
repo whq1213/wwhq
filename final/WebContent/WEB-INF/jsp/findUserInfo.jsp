@@ -7,9 +7,13 @@
 </head>
 
 <body> 
-leave界面
-1.显示现在身上有假的人
-2.以管理员的身份为每个人销假
-难点超出范围预警（会提示管理员）（选做）
+显示用户信息
+${name }
+用户密码${name.password }
+用户权限${name.isAdmin }
+${name }
+
+缺少修改功能，靠jsp实现
+
 </body>
 </html>

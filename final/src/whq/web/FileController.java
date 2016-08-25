@@ -53,9 +53,9 @@ public class FileController {
 			System.out.println("lkgfasdkl");
 			
 		}
-		System.out.println(u.getId());
+		System.out.println(u.getUser_id());
 		
-		f.setUp_user_id(u.getId());
+		f.setUp_user_id(u.getUser_id());
 		Timestamp t = new Timestamp(new Date().getTime()); 
 		System.out.println(t); 
   	  	f.setUp_time(t);

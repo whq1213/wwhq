@@ -28,13 +28,7 @@ public class MyController {
 	public void setUserService1(IUserService1 userService1) {
 		this.userService1 = userService1;
 	}
-	@RequestMapping(value="/login/a")
-	public String search() {
-		
-		System.out.println("查询地址");
-		
-		return "search";
-	}
+	
 	@RequestMapping(value="/login",method=RequestMethod.GET)
 	public String test(HttpServletRequest req,Model model) {
 		
@@ -68,7 +62,7 @@ public class MyController {
 			if(getcook==null){
 				System.out.println("不记住密码");
 			}else{
-				Cookie cookie1 = new Cookie("user_id",Integer.toString(u.getId()));
+				Cookie cookie1 = new Cookie("user_id",Integer.toString(u.getUser_id()));
 				Cookie cookie2 = new Cookie("password", u.getPassword());
 				res.addCookie(cookie1);
 				res.addCookie(cookie2);
@@ -83,27 +77,53 @@ public class MyController {
 		//return "most/index";
 	}
 	
+	/**
+	 * 查看个人信息
+	 * @return
+	 */
+	@RequestMapping(value="/findUserInfo")
+	public String findUserInfo(HttpSession session) {
+		
+		System.out.println("查询用户信息");
+		User1 u = (User1) session.getAttribute("name");
+		if(u ==null){
+			System.out.println("用户session 提取异常");
+		}else{
+			System.out.println(u.getPassword()+ "  "+u.getUser_id()+" "+u.getUser_name()+ " "+ u.getIsAdmin()+" "+u.getProfession());
+		}	
+		return "findUserInfo";
+	}
+	/**
+	 * 文件上传
+	 * @return
+	 */
 	@RequestMapping(value="/File/upload")
 	public String search2() {
 		
-		System.out.println("查询地址");
+		System.out.println("文件上传");
 		
 		return "redirect:/File/upload";
 	}
 	
-	
+	/**
+	 * 文件审核
+	 * @return
+	 */
 	@RequestMapping(value="/Down/shenhe")
 	public String search3() {
 		
-		System.out.println("查询地址");
+		System.out.println("文件审核");
 		
 		return "redirect:/Down/shenhe";
 	}
-	
+	/**
+	 * 文件下载
+	 * @return
+	 */
 	@RequestMapping(value="/Down/download")
 	public String search4() {
 		
-		System.out.println("查询地址");
+		System.out.println("文件下载");
 		
 		return "redirect:/Down/downloadfiles";
 	}

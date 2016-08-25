@@ -11,7 +11,7 @@
 <a  href="File/upload">上传文件</a>
 <a href="Down/shenhe">审核管理</a>
 <a href="Down/download">文件下载</a>
-<a href="Down/download">查看个人信息</a>
+<a href="findUserInfo">查看个人信息</a>
 
 
 </body>

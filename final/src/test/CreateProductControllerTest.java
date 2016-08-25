@@ -57,7 +57,7 @@ public class CreateProductControllerTest
     
     @Test
     public void  testG (){
-    	down.upload(request, response);
+    //	down.upload(request, response);
     	//userController.test1(request, response, 1001, "1", session);
     	// request.setMethod("POST");
     	//.addParameter("viewDetails", "true");

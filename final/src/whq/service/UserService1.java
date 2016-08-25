@@ -39,7 +39,7 @@ public class UserService1 implements IUserService1 {
 			}
 		else{
 			u.setPassword(password);
-			u.setId(user_id);
+			u.setUser_id(user_id);
 		}
 		return u;
 	}
