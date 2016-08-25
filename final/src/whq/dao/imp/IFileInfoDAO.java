@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import whq.model.FileInfo;
+import whq.model.User1;
 public interface IFileInfoDAO {
 	
 	

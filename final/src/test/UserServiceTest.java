@@ -2,16 +2,18 @@ package test;
 
 
 
-import java.io.File;
 
 
-import java.io.IOException;
-import java.sql.Timestamp;
-import java.util.Date;
+
+
+
+
+import java.util.Iterator;
+import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.io.FileUtils;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -32,23 +34,36 @@ import whq.service.imp.IUserService1;
 
 
 public class UserServiceTest {
-  //  @Resource
-   // private IUserService1 userService;
-    @Resource
-    private IFileInfoService fileInfoService;
+   @Resource
+  private IUserService1 userService;
+   // @Resource
+   // private IFileInfoService fileInfoService;
     //@Test // 新增（来个20条数据） 注意新增的时候先把事务注掉，要不会回滚操作
     public void testadd() {
     	String file_name = "README.html";
     	System.out.println(1);
-    	FileInfo f = fileInfoService.FindFileByName(file_name);
-    	System.out.println(f.getTitle());
+    	//FileInfo f = fileInfoService.FindFileByName(file_name);
+    //	System.out.println(f.getTitle());
       
     }
     @Test // 新增（来个20条数据） 注意新增的时候先把事务注掉，要不会回滚操作
-    public void testad() {
-   Timestamp t =new Timestamp(new Date().getTime()); 
-    	fileInfoService.UpDate(1, "wer", (byte)1, t);
-	
+    public void testad() {	
+    	User1 u= new User1();
+    	u.setIsAdmin((byte)1);
+    	u.setPassword("1");
+    	u.setProfession("案说法的发挥");
+    	u.setUser_name("weh");
+    	u.setUser_id(1002);
+		//userService.update(u);
+    //	userService.add(u);
+    	List<User1> t = userService.list();
+    	Iterator it=t.iterator();  
+        
+    	while(it.hasNext())  
+    	{  
+    	    System.out.println(it.next());  
+    	}  
+    	//userService.delete(1002);
       
     }
    

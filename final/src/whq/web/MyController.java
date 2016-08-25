@@ -81,7 +81,7 @@ public class MyController {
 	 * 查看个人信息
 	 * @return
 	 */
-	@RequestMapping(value="/findUserInfo")
+	@RequestMapping(value="/findUserInfo",method=RequestMethod.GET)
 	public String findUserInfo(HttpSession session) {
 		
 		System.out.println("查询用户信息");
@@ -91,6 +91,23 @@ public class MyController {
 		}else{
 			System.out.println(u.getPassword()+ "  "+u.getUser_id()+" "+u.getUser_name()+ " "+ u.getIsAdmin()+" "+u.getProfession());
 		}	
+		return "findUserInfo";
+	}
+	
+	
+	/**
+	 * 修改个人信息
+	 * @return
+	 */
+	@RequestMapping(value="/findUserInfo",method=RequestMethod.POST)
+	public String findUserInfo(User1 u) {	
+		//这里需要jsp将user对象传递进来
+		System.out.println("修改个人信息");
+		if(u==null){
+			System.out.println("获取出错");
+		}else{
+			userService1.update(u);
+		}
 		return "findUserInfo";
 	}
 	/**

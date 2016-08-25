@@ -13,7 +13,7 @@ ${name }
 用户权限${name.isAdmin }
 ${name }
 
-缺少修改功能，靠jsp实现
+缺少修改功能，靠jsp实现需要将jsp传递进来
 
 </body>
 </html>

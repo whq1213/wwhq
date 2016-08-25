@@ -1,5 +1,7 @@
 package whq.service;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 
@@ -42,6 +44,49 @@ public class UserService1 implements IUserService1 {
 			u.setUser_id(user_id);
 		}
 		return u;
+	}
+
+	@Override
+	public void update(User1 u) {
+		// TODO Auto-generated method stub
+		
+		User1 uu = userDao1.loadByUsername(u.getUser_id());
+		 if(uu==null) {
+				System.out.println("更新出现问题");
+				throw new LoginException("更新出现问题");
+		}else{
+		userDao1.update(u);
+		}
+		
+		
+	}
+
+	@Override
+	public void add(User1 u) {
+		// TODO Auto-generated method stub
+		
+		 userDao1.add(u);
+		
+		
+	}
+
+	@Override
+	public void delete(int user_id) {
+		// TODO Auto-generated method stub
+		 User1 uu = userDao1.loadByUsername(user_id);
+		 if(uu==null) {
+				System.out.println("删除出现问题");
+				throw new LoginException("删除出现问题");
+		}else{
+		userDao1.delete(user_id);	
+				}
+		
+	}
+
+	@Override
+	public List<User1> list() {
+		// TODO Auto-generated method stub		
+		return userDao1.list();
 	}
 
 }
