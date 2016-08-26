@@ -42,10 +42,13 @@ public class MessageDao extends HibernateDaoSupport implements IMessageDao {
 	}
 
 	@Override
-	public void deleteByMainId(int mes_mainid) {
+	public void deleteByMainId(Message mes) {
 		// TODO Auto-generated method stub
-		Message mes = this.loadByMainId(mes_mainid);
 		this.getHibernateTemplate().delete(mes);
 	}
+
+	
+
+
 
 }

@@ -98,13 +98,14 @@
                     <li>
                         <a href="#" class="btn btn-default dropdown-toggle info-number" data-toggle="dropdown">
                             <i class="fa fa-envelope-o"></i>
-                            <span class="badge">20</span>
+                            <span class="badge">${mes.size() }</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-head pull-right">
-                            <h5 class="title">You have 21 Mails </h5>
+                            <h5 class="title">You have ${mes.size() } Messages </h5>
                             <ul class="dropdown-list normal-list">
                                 <li class="new">
-                                    <a href="">
+            
+                                    <a href="deleteMessage" >
                                         <span class="thumb"><img src="images/photos/user1.png" alt="123" /></span>
                                         <span class="desc">
                                           <span class="name">John Doe <span class="badge badge-success">new</span></span>

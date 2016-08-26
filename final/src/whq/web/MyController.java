@@ -1,5 +1,7 @@
 package whq.web;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import whq.dao.UserDao1;
+import whq.model.Message;
 import whq.model.User1;
+import whq.service.imp.IMessageService;
 import whq.service.imp.IUserService1;
 
 
@@ -30,6 +34,17 @@ public class MyController {
 	public void setUserService1(IUserService1 userService1) {
 		this.userService1 = userService1;
 	}
+	
+	private IMessageService messageService;
+	
+	public IMessageService getMessageService() {
+		return messageService;
+	}
+	@Resource
+	public void setMessageService(IMessageService messageService) {
+		this.messageService = messageService;
+	}
+	
 	
 	@RequestMapping(value="/login",method=RequestMethod.GET)
 	public String test(HttpServletRequest req,Model model) {
@@ -51,7 +66,7 @@ public class MyController {
 		return "login";
 	}
 	@RequestMapping(value="/login",method=RequestMethod.POST)
-	public String test1(HttpServletRequest req,HttpServletResponse res, int user_id,String password,HttpSession session) 
+	public String test1(HttpServletRequest req,HttpServletResponse res, int user_id,String password,HttpSession session,Model model) 
 	{	
 		System.out.println("工号"+user_id);
 		System.out.println("密碼"+password);
@@ -70,12 +85,16 @@ public class MyController {
 				res.addCookie(cookie2);
 			}
 		}
-		
 		session.setAttribute("name", u);//傳入繪畫
-		
-		//return "redirect:/File/upload";
-		//return "redirect:/Down/load";
-	//return "main";
+		List<Message> mes =  messageService.loadByMesUsername(user_id);
+		if(mes==null){
+			System.out.println("没有新消息");
+		}else{
+			for(Message m:mes){
+				System.out.println(m.getMes_state()+"   "+m.getMes_user_shnhe());
+			}
+		}
+		model.addAttribute("mes", mes);
 		return "mm/homepage";
 	}
 	
@@ -194,6 +213,13 @@ public class MyController {
 	@RequestMapping(value="/uploadrecode",method=RequestMethod.GET)
 	public String uploadrecode() {
 		return "redirect:/File/uploadrecode";
+	}
+	
+	@RequestMapping(value="/deleteMessage",method=RequestMethod.GET)
+	public String deleteMessage() {
+		System.out.println(66+"界面问题");
+		messageService.deleteByMainId(6);
+		return "redirect:/My/login";
 	}
 
 }

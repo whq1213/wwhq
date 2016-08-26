@@ -24,6 +24,7 @@ import whq.model.FileInfo;
 import whq.model.Message;
 import whq.model.User1;
 import whq.service.imp.IFileInfoService;
+import whq.service.imp.IMessageService;
 import whq.service.imp.IUserService1;
 
 
@@ -41,21 +42,16 @@ public class UserServiceTest {
     @Resource
     private IFileInfoService fileInfoService;
     @Resource
-    private IMessageDao messageDao;
+    private IMessageService messageService;
     
   
     @Test // 新增（来个20条数据） 注意新增的时候先把事务注掉，要不会回滚操作
     public void testad() {	
-    	Message m = new Message();
-    	m.setMes_content("手动");
-    	m.setMes_state("sd");
-    	m.setMes_user_id(1001);
-    	m.setMes_user_shnhe(1002);
+    	messageService.deleteByMainId(5);
     	
+    	//System.out.println(messageDao.loadByMainId(2));
     	
-    	System.out.println(messageDao.loadByMainId(2));
-    	
-    	System.out.println(messageDao.loadByMesUsername(1001));
+    	//System.out.println(messageDao.loadByMesUsername(1001));
 //    	User1 u= new User1();
     	
 //    	u.setIsAdmin((byte)1);

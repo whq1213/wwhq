@@ -24,8 +24,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.mysql.jdbc.StandardSocketFactory;
 
 import whq.model.FileInfo;
+import whq.model.Message;
 import whq.model.User1;
 import whq.service.imp.IFileInfoService;
+import whq.service.imp.IMessageService;
 
 @Controller
 @RequestMapping("/Down")
@@ -40,6 +42,17 @@ public class DownloadFileController {
 	@Resource
 	public void setFileInfoService(IFileInfoService fileInfoService) {
 		this.fileInfoService = fileInfoService;
+	}
+	
+	private IMessageService messageService;
+	
+
+	public IMessageService getMessageService() {
+		return messageService;
+	}
+	@Resource
+	public void setMessageService(IMessageService messageService) {
+		this.messageService = messageService;
 	}
 
 	@RequestMapping(value = "/load", method = RequestMethod.GET)
@@ -98,7 +111,7 @@ public class DownloadFileController {
 	}
 
 	/**
-	 * 文件審核
+	 * 文件审核通过
 	 * 
 	 * @param req
 	 * @param filename
@@ -106,7 +119,7 @@ public class DownloadFileController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/uploadfiles", method = RequestMethod.GET)
-	public String uploadfiles(HttpServletRequest req, String filename) throws IOException {
+	public String uploadfiles(HttpServletRequest req, String filename,HttpSession session) throws IOException {
 
 		System.out.println("上传" + filename);
 		String uploadFilePath = req.getSession().getServletContext().getRealPath("/resourse/template");
@@ -120,19 +133,34 @@ public class DownloadFileController {
 		File file2 = new File(dir + "/" + filename);
 		FileUtils.copyFileToDirectory(file, file2);
 		Timestamp t = new Timestamp(new Date().getTime());
-
 		System.out.println(t.toString());
 		fileInfoService.UpDate(f.getFile_id(), dir, (byte) 1, t);//更新文件记录
 		//向消息表插入消息
+		Message mes = new Message();
+		mes.setMes_state("审核通过");
+		mes.setMes_user_id(f.getUp_user_id());
+		User1 u = (User1) session.getAttribute("name");	//通过上传用户找到用户
+		System.out.println(u.getUser_id());
+		mes.setMes_user_shnhe(u.getUser_id());
+		mes.setMes_content(filename+"审核通过");
+		messageService.add(mes);	//添加消息
+		
 		if (file.delete()) {
 			System.out.println("刪除成功");
 		}
 		return "shenhe";
 
 	}
-
+	/**
+	 * 审核未通过
+	 * @param req
+	 * @param filename
+	 * @param session
+	 * @return
+	 * @throws IOException
+	 */
 	@RequestMapping(value = "/deletfiles", method = RequestMethod.GET)
-	public String deletfiles(HttpServletRequest req, String filename) throws IOException {
+	public String deletfiles(HttpServletRequest req, String filename,HttpSession session) throws IOException {
 
 		System.out.println("刪除" + filename);
 		String uploadFilePath = req.getSession().getServletContext().getRealPath("/resourse/template");
@@ -141,13 +169,29 @@ public class DownloadFileController {
 		if (file.delete()) {
 			System.out.println("刪除成功");
 		}
-		FileInfo f = fileInfoService.FindFileByName(filename);
-		System.out.println(f.getFile_id() + "  " + f.getFilepath());
+		FileInfo f = fileInfoService.FindFileByName(filename);//找到文件位置
+		System.out.println(f.getUp_user_id());
+		Message mes = new Message();
+		mes.setMes_state("审核未通过");
+		mes.setMes_user_id(f.getUp_user_id());
+		User1 u = (User1) session.getAttribute("name");	//通过上传用户找到用户
+	
+		System.out.println(u.getUser_id());
+		mes.setMes_user_shnhe(u.getUser_id());
+		mes.setMes_content(filename+"审核未通过");
+		messageService.add(mes);	//添加消息
+		
 		fileInfoService.DeletByName(f);
 		return "shenhe";
 
 	}
-
+	/**
+	 * 文件下载
+	 * @param req
+	 * @param resp
+	 * @param filename
+	 * @return
+	 */
 	@RequestMapping(value = "/downloadfiles", method = RequestMethod.GET)
 	public String downloadfiles(HttpServletRequest req, HttpServletResponse resp, String filename) {
 
@@ -206,7 +250,14 @@ public class DownloadFileController {
 
 		return null;
 	}
-
+	/**
+	 * 文件预览
+	 * @param session
+	 * @param req
+	 * @param resp
+	 * @param filename
+	 * @return
+	 */
 	@RequestMapping(value = "/findUserInfo", method = RequestMethod.GET)
 	public String findUserInfo(HttpSession session, HttpServletRequest req, HttpServletResponse resp, String filename) {
 		String uploadFilePath = req.getSession().getServletContext().getRealPath("/resourse/real");
