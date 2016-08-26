@@ -23,7 +23,7 @@
     <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     	<div id="admin">
     		<div class="ad-menu" id="ad-menu">
-                <div class="ad-logo"><img src="image/m-logo.png" height="103" width="130"></div>
+                <div class="ad-logo"><img src="${pageContext.request.contextPath}/image/m-logo.png" height="103" width="130"></div>
                 <div class="ad-list">
                     <ul>
                         <li>
@@ -35,10 +35,10 @@
                             <div class="li-item"><em class="scm li-ico ic3"></em>我的文件<span class="scm arrow"></span></div>
                             <dl>
                                 <dd>
-				     				<a href="findUserInfo" class="dd-item" target="iframe0">文件上传<span class="scm dd-ar"></span></a>
+				     				<a href="File/upload" class="dd-item" target="iframe0">文件上传<span class="scm dd-ar"></span></a>
 				     			</dd>
 				     			<dd>
-				     				<a href="上传记录.jsp" class="dd-item" target="iframe0">上传记录<span class="scm dd-ar"></span></a>
+				     				<a href="uploadrecode" class="dd-item" target="iframe0">上传记录<span class="scm dd-ar"></span></a>
 				     			</dd>                                                                   
                             </dl>
                         </li>
@@ -46,7 +46,7 @@
                             <div class="li-item"><em class="scm li-ico ic4"></em>下载专区<span class="scm arrow"></span></div>
                             <dl>
                                 <dd>
-				     				<a href="内容栏.jsp" class="dd-item" target="iframe0">类别一<span class="scm dd-ar"></span></a>
+				     				<a href="Down/download" class="dd-item" target="iframe0">类别一<span class="scm dd-ar"></span></a>
 				     			</dd>
 				     			<dd>f
 				     				<a href="内容栏.jsp" class="dd-item" target="iframe0">类别二<span class="scm dd-ar"></span></a>
@@ -57,7 +57,7 @@
                             <div class="li-item"><em class="scm li-ico ic5"></em>用户管理<span class="scm arrow"></span></div>
                             <dl>
                                 <dd>
-                                  <a href="用户信息.jsp" class="dd-item" target="iframe0">个人信息<span class="scm dd-ar"></span></a>
+                                  <a href="findUserInfo" class="dd-item" target="iframe0">个人信息<span class="scm dd-ar"></span></a>
                                 </dd>
                                 <dd>
                                   <a href="用户文件.jsp" class="dd-item" target="iframe0">用户文件<span class="scm dd-ar"></span></a>
@@ -77,7 +77,7 @@
                                     <a href="文件管理.jsp" class="dd-item" target="iframe0">文件管理<span class="scm dd-ar"></span></a>
                                 </dd>
                                 <dd>
-                                    <a href="文件审核.jsp" class="dd-item" target="iframe0">文件审核<span class="scm dd-ar"></span></a>
+                                    <a href="Down/shenhe" class="dd-item" target="iframe0">文件审核<span class="scm dd-ar"></span></a>
                                 </dd>
                                 <dd>
                                     <a href="复选框权限.jsp" class="dd-item" target="iframe0">权限管理<span class="scm dd-ar"></span></a>

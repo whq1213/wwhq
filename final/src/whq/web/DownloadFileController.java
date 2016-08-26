@@ -14,6 +14,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.mysql.jdbc.StandardSocketFactory;
 
 import whq.model.FileInfo;
+import whq.model.User1;
 import whq.service.imp.IFileInfoService;
 
 @Controller
@@ -120,7 +122,8 @@ public class DownloadFileController {
 		Timestamp t = new Timestamp(new Date().getTime());
 
 		System.out.println(t.toString());
-		fileInfoService.UpDate(f.getFile_id(), dir, (byte) 1, t);
+		fileInfoService.UpDate(f.getFile_id(), dir, (byte) 1, t);//更新文件记录
+		//向消息表插入消息
 		if (file.delete()) {
 			System.out.println("刪除成功");
 		}
@@ -168,31 +171,83 @@ public class DownloadFileController {
 			if (!file.exists()) {
 
 				System.out.println("您要下载的资源已被删除！！"); // 消息提示框
-				return "downloadfiles";
+				return "download";
 			}
 			try {
 				resp.addHeader("content-disposition", "attachment;filename=" + URLEncoder.encode(filename, "UTF-8"));
-				FileInputStream in = new FileInputStream(dir + "\\" + filename);
+				int count = f.getDown_count();
+				count++;
+				fileInfoService.updateCount(f.getFile_id(), count);
+				FileInputStream in = new FileInputStream(dir + "\\" + filename + "\\" + filename);
 				// 创建输出流
-				OutputStream out = resp.getOutputStream();
+				OutputStream output = resp.getOutputStream();
 				// 缓存流
 				byte[] buffer = new byte[1024];
 				int len = 0;
 				// 循环将输入流中的内容读取到缓冲区当中
 				while ((len = in.read(buffer)) > 0) {
 					// 输出缓冲区的内容到浏览器，实现文件下载
-					out.write(buffer, 0, len);
+					output.write(buffer, 0, len);
 				}
+				output.flush();
 				in.close();
-				out.close();
+				output.close();
 			} catch (Exception e) {
+				// TODO: handle exception
 				e.printStackTrace();
-				System.out.println("包一场");
+				System.out.println("文件下载异常");
 			}
+
+		} else {
+
+			return "download";
 
 		}
 
-		return "download";
+		return null;
+	}
+
+	@RequestMapping(value = "/findUserInfo", method = RequestMethod.GET)
+	public String findUserInfo(HttpSession session, HttpServletRequest req, HttpServletResponse resp, String filename) {
+		String uploadFilePath = req.getSession().getServletContext().getRealPath("/resourse/real");
+
+		Map<String, String> fileNameMap = new HashMap<String, String>();
+		listfile(new File(uploadFilePath), fileNameMap);
+		for (String key : fileNameMap.keySet()) {
+			System.out.println(key);
+		}
+		req.setAttribute("fileNameMap", fileNameMap);
+		if (filename != null) {
+			String fileSaveRootPath = req.getSession().getServletContext().getRealPath("/resourse/real");// 审核通过存放路径,下载搜索路径
+			FileInfo f = fileInfoService.FindFileByName(filename);
+			String dir = fileSaveRootPath + "\\" + f.getTitle() + "\\" + f.getType();
+			try {
+				FileInputStream in = new FileInputStream(dir + "\\" + filename + "\\" + filename);
+				// 创建输出流
+				OutputStream output = resp.getOutputStream();
+				// 缓存流
+				byte[] buffer = new byte[1024];
+				int len = 0;
+				// 循环将输入流中的内容读取到缓冲区当中
+				while ((len = in.read(buffer)) > 0) {
+					// 输出缓冲区的内容到浏览器，实现文件下载
+					output.write(buffer, 0, len);
+				}
+
+				output.flush();
+				in.close();
+				output.close();
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+				System.out.println("预览异常");
+			}
+		} else {
+			return "preview";
+		}
+
+		return null;
+
 	}
 
 }

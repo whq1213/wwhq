@@ -11,7 +11,7 @@
 ${name }
 用户密码${name.password }
 用户权限${name.isAdmin }
-${name }
+${name.user_id }
 
 缺少修改功能，靠jsp实现需要将jsp传递进来
 

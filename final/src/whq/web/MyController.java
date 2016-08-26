@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import whq.dao.UserDao1;
 import whq.model.User1;
 import whq.service.imp.IUserService1;
 
@@ -73,8 +75,8 @@ public class MyController {
 		
 		//return "redirect:/File/upload";
 		//return "redirect:/Down/load";
-		return "main";
-		//return "most/index";
+	//return "main";
+		return "mm/homepage";
 	}
 	
 	/**
@@ -94,6 +96,13 @@ public class MyController {
 		return "findUserInfo";
 	}
 	
+	
+	@RequestMapping(value="/fi",method=RequestMethod.GET)
+	public String f(HttpSession session) {
+		
+		
+		return "mm/FileUpload";
+	}
 	
 	/**
 	 * 修改个人信息
@@ -145,5 +154,46 @@ public class MyController {
 		return "redirect:/Down/downloadfiles";
 	}
 	
+	/**
+	 * 退出登录
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value="/loginout")
+	public String loginout(HttpSession session) {
+		
+		System.out.println("退出登录");
+		session.removeAttribute("name");
+		return "redirect:/My/login";
+	}
+	/**
+	 * 修改密码
+	 * 
+	 * @param session
+	 * @param password
+	 * @param password1
+	 * @param password2
+	 * @return
+	 */
+	@RequestMapping(value="/changepassword",method=RequestMethod.POST)
+	public String changepassword(HttpSession session,String password ,String password1,String password2) {
+		
+		System.out.println("开始修改密码");
+		User1 u = (User1) session.getAttribute("name");
+		
+		userService1.updatepassword(u,password, password1, password2);
+		System.out.println("密码修改成功");
+		return "changepassword";
+	}
+	
+	@RequestMapping(value="/changepassword",method=RequestMethod.GET)
+	public String changepassword() {
+		return "changepassword";
+	}
+	
+	@RequestMapping(value="/uploadrecode",method=RequestMethod.GET)
+	public String uploadrecode() {
+		return "redirect:/File/uploadrecode";
+	}
 
 }

@@ -69,6 +69,19 @@ public class FileInfoService implements IFileInfoService {
 		fileInfoDao.deletByName(f);
 		
 	}
+	@Override
+	public void updateCount(int file_id, int down_count) {
+		// TODO Auto-generated method stub
+		fileInfoDao.updateCount(file_id, down_count);
+
+	}
+	@Override
+	public List<FileInfo> findByFileUserID(int up_user_id) {
+		// TODO Auto-generated method stub
+		List<FileInfo> list = fileInfoDao.findByFileUserID(up_user_id);
+		return list;
+	}
+	
 
 	
 	

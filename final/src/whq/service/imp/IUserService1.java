@@ -11,4 +11,5 @@ public interface IUserService1 {
 	public abstract void add(User1 u);//Ìí¼Ó
 	public abstract  void delete(int user_id);//É¾³ý
 	public List<User1> list();
+	public void updatepassword(User1 u,String password, String password1, String password2);
 }

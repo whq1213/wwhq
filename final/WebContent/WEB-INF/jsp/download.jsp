@@ -11,14 +11,23 @@
        <!-- 遍历Map集合 -->
      <c:forEach var="me" items="${fileNameMap}">
          <c:url value="/Down/downloadfiles" var="downurl">
-         
              <c:param name="filename" value="${me.key}">
              </c:param>
          </c:url>
-         
          ${me.value}<a href="${downurl}">下载</a>
+         	
+          <c:url value="/Down/findUserInfo" var="yulan">
+             <c:param name="filename" value="${me.key}">
+             </c:param>
+         </c:url>
+          ______ <a href="${yulan}"  target="iframe1" >预览</a>
          <br/>
     </c:forEach>
+    <div class="ad-main-comment J_mainContent" id="ad-iframe">
+                    <iframe class="J_iframe" name="iframe1" width="50%" height="50%" src="findUserInfo" frameborder="0"></iframe>
+                    <!-- <iframe class="J_iframe" name="iframe1" width="100%" height="50%" src="index.jsp" frameborder="0"></iframe> -->
+                </div>
+    
   
 </body> 
 </html>

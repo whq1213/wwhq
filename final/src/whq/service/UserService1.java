@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import whq.dao.imp.IUserDao1;
 import whq.exception.LoginException;
+import whq.exception.PasswordException;
 import whq.model.User1;
 import whq.service.imp.IUserService1;
 @Service("userService1")
@@ -87,6 +88,24 @@ public class UserService1 implements IUserService1 {
 	public List<User1> list() {
 		// TODO Auto-generated method stub		
 		return userDao1.list();
+	}
+
+	@Override
+	public void updatepassword(User1 u,String password,String password1,String password2) {
+		// TODO Auto-generated method stub
+	if(!u.getPassword().equals(password)){
+		System.out.println("原始密码错误");
+		System.out.println();
+		throw new PasswordException("原始密码错误");
+	}else if(password1.equals(password2)){
+		u.setPassword(password1);
+		userDao1.update(u);
+	}else{
+		System.out.println("两次密码输入不一致");
+		throw new PasswordException("两次密码输入不一致");
+		
+	}
+		
 	}
 
 }

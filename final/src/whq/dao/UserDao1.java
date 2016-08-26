@@ -50,6 +50,7 @@ public class UserDao1 extends HibernateDaoSupport implements IUserDao1 {
 		return this.getSession().createQuery("from User1").list();
 	}
 	
+	
 
 
 }

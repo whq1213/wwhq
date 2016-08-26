@@ -84,4 +84,29 @@ public class FileInfoDAO extends HibernateDaoSupport implements IFileInfoDAO{
 		this.getHibernateTemplate().delete(f);
 	}
 
+	@Override
+	public void updateCount(int file_id, int down_count) {
+		// TODO Auto-generated method stub
+		
+		Session session = this.getSession();
+	//	session.beginTransaction();
+		Query query = session.createQuery("update FileInfo as file set file.down_count = ? where file_id = ?");
+		query.setParameter(0, down_count);
+		query.setParameter(1, file_id);
+		query.executeUpdate();
+	//	session.getTransaction().commit();
+		
+	}
+
+	@Override
+	public List<FileInfo> findByFileUserID(int up_user_id) {
+		// TODO Auto-generated method stub
+		//this.getSession().createQuery("from User1").list();
+		//Session session = this.getSession();
+		//Query query = (Query) session.createQuery("from FileInfo where up_user_id = ?").list();;
+	//	List<FileInfo> list = (List<FileInfo>)query.setParameter(0, up_user_id);
+		return this.getSession().createQuery("from FileInfo where up_user_id = ?").setParameter(0, up_user_id).list();
+		
+	}
+
 }

@@ -12,6 +12,7 @@ public interface IUserDao1 {
 	public abstract  void delete(int user_id);//É¾³ý
 	public List<User1> list();
 	
+	
 
 
 }

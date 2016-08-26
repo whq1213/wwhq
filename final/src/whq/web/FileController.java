@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,7 +36,6 @@ public class FileController {
 	}
 	@RequestMapping(value="/upload",method=RequestMethod.GET)
 	public String upload() {
-		System.out.println("传");
 		
 		return "upload";
 	}
@@ -74,6 +75,20 @@ public class FileController {
 
 		fileInfoService.add(f);
 		return "upload";
+	}
+	/**
+	 * 	文件上传记录
+	 * 
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value="/uploadrecode",method=RequestMethod.GET)
+	public String uploadrecode(HttpSession session,Model model) {
+		System.out.println("上传记录");
+	User1 u = 	(User1) session.getAttribute("name");
+	List<FileInfo> list = fileInfoService.findByFileUserID(u.getUser_id());
+	model.addAttribute("uploadrecode", list);
+		return "uploadrecode";
 	}
 	
 	
